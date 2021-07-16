@@ -24,7 +24,7 @@ namespace WEBApi.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            string query = @"select * from Employee";
+            string query = @"select * from Department";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
             SqlDataReader myReader;
