@@ -89,15 +89,15 @@ namespace WEBApi.Controllers
         [HttpPut]
         public JsonResult Put(Bus bus)
         {
-            //string query = @"
-            //    UPDATE BUS SET Color = '" + bus.Color + "DriverID = " + bus.DriverID +
-            //    "RouteID = " + bus.RouteID +
-            //    @"'
-            //    WHERE BusNo = " + bus.BusNo + @"";
-
-            //Only for testing purpose
             string query = @"
-                UPDATE BUS SET Color = 'GII',DriverID = 111,RouteID = 'R107' WHERE BusNo = 'AAA9999'" + @"";
+                UPDATE BUS SET Color = '" + bus.Color + "DriverID = " + bus.DriverID +
+                "RouteID = " + bus.RouteID +
+                @"'
+                WHERE BusNo = " + bus.BusNo + @"";
+
+            //Only for testing purpose.This is working correctly but I dont know the problem with the above code.OK Lets try
+            //string query = @"
+            //    UPDATE BUS SET Color = 'GII',DriverID = 111,RouteID = 'R107' WHERE BusNo = 'AAA9999'" + @"";
 
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("BTMSAppCon");
