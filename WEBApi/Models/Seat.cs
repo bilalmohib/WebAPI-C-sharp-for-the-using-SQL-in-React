@@ -7,10 +7,9 @@ namespace WEBApi.Models
 {
     public class Seat
     {
-        public int ListNo { get; set; }
-        public string BusNo { get; set; }
-        public string departureDate { get; set; }
-        public string departureTime { get; set; }
-        public string ArrivalTime { get; set; }
+        public string BUS_SEATID { get; set; }
+        public int SeatID { get; set; }
+        public string SEATNO { get; set; }
+        public int Availability_of_seat { get; set; }
     }
 }
