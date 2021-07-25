@@ -3,21 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
-using System.Data;
 using WEBApi.Models;
 
 namespace WEBApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DepartmentController : ControllerBase
+    public class PersonController : ControllerBase
     {
         private readonly IConfiguration _configuration;
 
-        public DepartmentController(IConfiguration configuration)
+        public PersonController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -25,14 +25,14 @@ namespace WEBApi.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            string query = @"select * from Department";
+            string query = @"select * from Person";
             DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
+            string sqlDataSource = _configuration.GetConnectionString("BTMSAppCon");
             SqlDataReader myReader;
-            using(SqlConnection myCon = new SqlConnection(sqlDataSource))
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
             {
                 myCon.Open();
-                using (SqlCommand mysqlCommand = new SqlCommand(query,myCon))
+                using (SqlCommand mysqlCommand = new SqlCommand(query, myCon))
                 {
                     myReader = mysqlCommand.ExecuteReader();
                     table.Load(myReader);
@@ -49,13 +49,20 @@ namespace WEBApi.Controllers
 
         //POST Method to Insert the data into the sql database
         [HttpPost]
-        public JsonResult Post(Department department)
+        public JsonResult Post(Person person)
         {
-            string query = @"INSERT INTO Department VALUES 
-            ('"+department.DepartmentName+@"')
+            string query = @"INSERT INTO Person(CNIC,FName ,LName,Age,Sex,Contact) VALUES 
+            (
+               '" + person.CNIC + @"',
+               '" + person.FName + @"',
+               '" + person.LName + @"',
+               '" + person.Age + @"',
+               '" + person.Sex + @"',
+               '" + person.Contact + @"'
+            )
             ";
             DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
+            string sqlDataSource = _configuration.GetConnectionString("BTMSAppCon");
             SqlDataReader myReader;
             using (SqlConnection myCon = new SqlConnection(sqlDataSource))
             {
@@ -78,13 +85,15 @@ namespace WEBApi.Controllers
 
         //PUT Method to Update the data into the sql database table
         [HttpPut]
-        public JsonResult Put(Department department)
+        public JsonResult Put(Person person)
         {
             string query = @"
-                UPDATE Department SET DepartmentName = '" + department.DepartmentName + @"'
-                WHERE DepartmentId = " + department.DepartmentId + @"";
+                UPDATE PERSON SET FName = '" + person.FName + "LName = " + person.LName + "Age = " + person.Age +
+                "Sex = " + person.Sex +"Contact = " + person.Contact +
+                @"'
+                WHERE CNIC = " + person.CNIC + @"";
             DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
+            string sqlDataSource = _configuration.GetConnectionString("BTMSAppCon");
             SqlDataReader myReader;
             using (SqlConnection myCon = new SqlConnection(sqlDataSource))
             {
@@ -105,13 +114,13 @@ namespace WEBApi.Controllers
         }
 
         //Delete Method to Delete the data into the sql database table
-        [HttpDelete]
-        public JsonResult Delete(int id)
+        [HttpDelete("{id}")]
+        public JsonResult Delete(string id)
         {
             string query = @"
-                DELETE FROM Department WHERE DepartmentId = '" + id + @"'";
+                DELETE FROM PERSON WHERE CNIC = '" + id + @"'";
             DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
+            string sqlDataSource = _configuration.GetConnectionString("BTMSAppCon");
             SqlDataReader myReader;
             using (SqlConnection myCon = new SqlConnection(sqlDataSource))
             {
@@ -130,6 +139,5 @@ namespace WEBApi.Controllers
             //Now Returning the response when the data is returned that is a message "Added Successfully"
             return new JsonResult("Deleted Successfully");
         }
-
     }
 }

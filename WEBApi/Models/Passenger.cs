@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace WEBApi.Models
 {
-    public class Department
+    public class Passenger
     {
-        public int DepartmentId { get; set; }
-
-        public string DepartmentName { get; set; }
+        public string CNIC { get; set; }
+        public int TicketNo { get; set; }
     }
 }
