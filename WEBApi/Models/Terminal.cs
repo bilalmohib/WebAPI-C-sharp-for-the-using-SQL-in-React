@@ -7,6 +7,8 @@ namespace WEBApi.Models
 {
     public class Terminal
     {
-
+        public int TerminalID { get; set; }
+        public string Terminal_Name { get; set; }
+        public string Terminal_City { get; set; }
     }
 }

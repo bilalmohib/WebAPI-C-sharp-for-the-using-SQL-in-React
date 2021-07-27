@@ -7,5 +7,8 @@ namespace WEBApi.Models
 {
     public class Ticket
     {
+        public int TicketNo { get; set; }
+        public int SeatNo { get; set; }
+        public int Price { get; set; }
     }
 }
