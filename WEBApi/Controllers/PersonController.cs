@@ -88,7 +88,7 @@ namespace WEBApi.Controllers
         public JsonResult Put(Person person)
         {
             string query = @"
-                UPDATE PERSON SET FName = '" + person.FName + "LName = " + person.LName + "Age = " + person.Age +
+                UPDATE PERSON SET FName = '" + person.FName + "LName = " + person.LName + "CNIC = " + person.CNIC + "Age = " + person.Age +
                 "Sex = " + person.Sex +"Contact = " + person.Contact +
                 @"'
                 WHERE CNIC = " + person.CNIC + @"";

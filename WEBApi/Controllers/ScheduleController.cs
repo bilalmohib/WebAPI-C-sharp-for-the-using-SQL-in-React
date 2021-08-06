@@ -88,7 +88,7 @@ namespace WEBApi.Controllers
         {
             string query = @"
                 UPDATE SCHEDULE SET ListNo = '" + schedule.ListNo + "BusNo = " + schedule.BusNo + "departureDate = " + schedule.departureDate +
-                "departureTime = " + schedule.departureTime +
+                "departureTime = " + schedule.departureTime + "ArrivalTime = " + schedule.ArrivalTime +
                 @"'
                 WHERE ListNo = " + schedule.ListNo + @"";
             DataTable table = new DataTable();

@@ -86,7 +86,7 @@ namespace WEBApi.Controllers
             string query = @"
                 UPDATE Passenger SET CNIC = '" + passenger.CNIC + "TicketNo = " + passenger.TicketNo +
                 @"'
-                WHERE DriverID = " + passenger.CNIC + @"";
+                WHERE CNIC = " + passenger.CNIC + @"";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("BTMSAppCon");
             SqlDataReader myReader;

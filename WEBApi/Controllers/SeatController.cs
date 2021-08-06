@@ -51,32 +51,31 @@ namespace WEBApi.Controllers
         [HttpPost]
         public JsonResult Post(Seat seat)
         {
-            //string query = @"INSERT INTO Seat(BUS_SEATID,SeatID ,SEATNO,Availability_of_seat) VALUES 
-            //(
-            //   '" + seat. + @"',
-            //   '" + seat.BusNo + @"',
-            //   '" + seat.departureDate + @"',
-            //   '" + seat.departureTime + @"',
-            //   '" + seat.ArrivalTime + @"'
-            //)
-            //";
-            //DataTable table = new DataTable();
-            //string sqlDataSource = _configuration.GetConnectionString("BTMSAppCon");
-            //SqlDataReader myReader;
-            //using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            //{
-            //    myCon.Open();
-            //    using (SqlCommand mysqlCommand = new SqlCommand(query, myCon))
-            //    {
-            //        myReader = mysqlCommand.ExecuteReader();
-            //        table.Load(myReader);
+            string query = @"INSERT INTO Seat(BUS_SEATID,SeatID ,SEATNO,Availability_of_seat) VALUES 
+            (
+               '" + seat.BUS_SEATID + @"',
+               '" + seat.SeatID + @"',
+               '" + seat.SEATNO + @"',
+               '" + seat.Availability_of_seat + @"'
+            )
+            ";
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("BTMSAppCon");
+            SqlDataReader myReader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand mysqlCommand = new SqlCommand(query, myCon))
+                {
+                    myReader = mysqlCommand.ExecuteReader();
+                    table.Load(myReader);
 
-            //        //Closing the reader
-            //        myReader.Close();
-            //        //Closing the Connection
-            //        myCon.Close();
-            //    }
-            //}
+                    //Closing the reader
+                    myReader.Close();
+                    //Closing the Connection
+                    myCon.Close();
+                }
+            }
             //Now Returning the response when the data is returned that is a message "Added Successfully"
             return new JsonResult("Added Successfully");
         }
@@ -84,13 +83,13 @@ namespace WEBApi.Controllers
 
         //PUT Method to Update the data into the sql database table
         [HttpPut]
-        public JsonResult Put(Schedule schedule)
+        public JsonResult Put(Seat seat)
         {
             string query = @"
-                UPDATE SCHEDULE SET ListNo = '" + schedule.ListNo + "BusNo = " + schedule.BusNo + "departureDate = " + schedule.departureDate +
-                "departureTime = " + schedule.departureTime +
+                UPDATE SEAT SET BUS_SEATID = '" + seat.BUS_SEATID + "SEATID = " + seat.SeatID + "SEATNO = " + seat.SEATNO +
+                "Availability_of_seat = " + seat.Availability_of_seat +
                 @"'
-                WHERE ListNo = " + schedule.ListNo + @"";
+                WHERE BUS_SEATID = " + seat.BUS_SEATID + @"";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("BTMSAppCon");
             SqlDataReader myReader;
@@ -114,10 +113,10 @@ namespace WEBApi.Controllers
 
         //Delete Method to Delete the data into the sql database table
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public JsonResult Delete(string id)
         {
             string query = @"
-                DELETE FROM SCHEDULE WHERE ListNo = '" + id + @"'";
+                DELETE FROM SEAT WHERE BUS_SEATID = '" + id + @"'";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("BTMSAppCon");
             SqlDataReader myReader;
