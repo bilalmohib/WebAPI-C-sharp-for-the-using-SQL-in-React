@@ -111,7 +111,7 @@ namespace WEBApi.Controllers
 
         //Delete Method to Delete the data into the sql database table
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public JsonResult Delete(string id)
         {
             string query = @"
                 DELETE FROM BUSRoute WHERE RouteID = '" + id + @"'";

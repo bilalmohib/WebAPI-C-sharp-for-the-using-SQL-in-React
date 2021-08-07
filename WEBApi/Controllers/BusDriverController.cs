@@ -51,9 +51,8 @@ namespace WEBApi.Controllers
         [HttpPost]
         public JsonResult Post(BusDriver busDriver)
         {
-            string query = @"INSERT INTO BusDriver(DriverID,CNIC ,BusNo) VALUES 
+            string query = @"INSERT INTO BusDriver(CNIC ,BusNo) VALUES 
             (
-               '" + busDriver.DriverID + @"',
                '" + busDriver.CNIC + @"',
                '" + busDriver.BusNo + @"'
             )

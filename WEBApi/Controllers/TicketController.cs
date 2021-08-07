@@ -51,9 +51,8 @@ namespace WEBApi.Controllers
         [HttpPost]
         public JsonResult Post(Ticket ticket)
         {
-            string query = @"INSERT INTO Ticket(TicketNo,SeatNo,Price) VALUES 
+            string query = @"INSERT INTO Ticket(SeatNo,Price) VALUES 
             (
-               '" + ticket.TicketNo + @"',
                '" + ticket.SeatNo + @"',
                '" + ticket.Price + @"'
             )
