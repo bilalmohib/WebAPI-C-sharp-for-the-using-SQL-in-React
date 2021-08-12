@@ -89,11 +89,16 @@ namespace WEBApi.Controllers
         [HttpPut]
         public JsonResult Put(Bus bus)
         {
+            //string query = @"
+            //    UPDATE BUS SET Color = '" + bus.Color + "DriverID = " + bus.DriverID +
+            //    "RouteID = " + bus.RouteID +
+            //    @"'
+            //    WHERE BusNo = " + bus.BusNo + @"";
+
+            //Only for testing purpose
             string query = @"
-                UPDATE Bus SET BusNo = '" + bus.BusNo + "Color = " + bus.Color + "DriverID = " + bus.DriverID +
-                "RouteID = " + bus.RouteID +
-                @"'
-                WHERE BusNo = " + bus.BusNo + @"";
+                UPDATE BUS SET Color = 'GII',DriverID = 111,RouteID = 'R107' WHERE BusNo = 'AAA9999'" + @"";
+
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("BTMSAppCon");
             SqlDataReader myReader;
