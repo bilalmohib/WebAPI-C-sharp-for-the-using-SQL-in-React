@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Photos\" />
     <Folder Include="NewFolder\" />
   </ItemGroup>
 

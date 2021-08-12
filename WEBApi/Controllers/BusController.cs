@@ -8,6 +8,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using WEBApi.Models;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WEBApi.Controllers
 {
@@ -16,10 +18,12 @@ namespace WEBApi.Controllers
     public class BusController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _env;
 
-        public BusController(IConfiguration configuration)
+        public BusController(IConfiguration configuration, IWebHostEnvironment env)
         {
             _configuration = configuration;
+            _env = env;
         }
         //GET API Method to get all the department details
         [HttpGet]
@@ -111,6 +115,9 @@ namespace WEBApi.Controllers
             return new JsonResult("Updated Successfully");
         }
 
+
+
+
         //Delete Method to Delete the data into the sql database table
         [HttpDelete("{id}")]
         public JsonResult Delete(string id)
@@ -137,5 +144,55 @@ namespace WEBApi.Controllers
             //Now Returning the response when the data is returned that is a message "Added Successfully"
             return new JsonResult("Deleted Successfully");
         }
+
+        [Route("SaveFile")]
+        [HttpPost]
+        public JsonResult SaveFile()
+        {
+            try
+            {
+                var httpRequest = Request.Form;
+                var postedFile = httpRequest.Files[0];
+                string filename = postedFile.FileName;
+                var physicalPath = _env.ContentRootPath + "/Photos/" + filename;
+
+                using (var stream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+
+                return new JsonResult(filename);
+            }
+            catch (Exception)
+            {
+                return new JsonResult("anonymous.png");
+            }
+        }
+
+        [Route("GetAllBusNames")]
+        protected JsonResult GetAllBusNames()
+        {
+            string query = @"select * from Bus";
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("BTMSAppCon");
+            SqlDataReader myReader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand mysqlCommand = new SqlCommand(query, myCon))
+                {
+                    myReader = mysqlCommand.ExecuteReader();
+                    table.Load(myReader);
+
+                    //Closing the reader
+                    myReader.Close();
+                    //Closing the Connection
+                    myCon.Close();
+                }
+            }
+            //Now Returning the data table as a Result
+            return new JsonResult(table);
+        }
+
     }
 }
